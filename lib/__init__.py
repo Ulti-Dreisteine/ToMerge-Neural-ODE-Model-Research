@@ -29,3 +29,20 @@ proj_dir, proj_cmap = config.proj_dir, config.proj_cmap
 env_params = config.env_conf
 model_params = config.conf
 test_params = config.test_params
+
+# ============ env params ============
+
+# ============ model params ============
+VARIABLES = model_params['VARIABLES']
+VARIABLES_BOUNDS = model_params['VARIABLES_BOUNDS']
+
+# ============ test params ============
+dt = test_params['dt']
+steps = test_params['steps']
+obs_n = test_params['obs_n']
+init_states_n = test_params['init_states_n']
+
+ca_0 = test_params['ca_0']
+T_0 = test_params['T_0']
+q = test_params['q']
+

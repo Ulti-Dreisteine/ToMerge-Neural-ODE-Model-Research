@@ -1,0 +1,11 @@
+# simulation params.
+dt: 0.01                  # time step during integration
+steps: 450                # integration time steps
+obs_n: 50                 # observed samples number during each ivp process
+init_states_n: 100        # initial states number
+
+# CSTR op params.
+ca_0: 1.0                 # inlet concent of component A
+T_0: 350.0                # inlet temp
+q: 100.0                  # coolant stream flowrate
+

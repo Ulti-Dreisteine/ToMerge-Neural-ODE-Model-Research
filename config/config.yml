@@ -1,0 +1,18 @@
+# Device & kinetic params.
+V: 100.0
+k_0: 7.2e+10
+E_div_R: 1.0e+4
+ro: 1.0e+3
+roc: 1.0e+3
+Cp: 1.0
+Cpc: 1.0
+qc: 100.0
+hA: 7.0e+5
+delta_H: 2.0e+5
+Tc_0: 350.0
+
+# Variables params.
+VARIABLES: ['ca', 'T']
+VARIABLES_BOUNDS:
+  ca: [0.0, 1.0]
+  T: [300, 520]
