@@ -123,6 +123,9 @@ if __name__ == '__main__':
 	T_list = list(np.random.permutation(np.linspace(410, 450, init_states_n)))
 	total_data, total_obs_data = generate_samples(ca_list, T_list, t, op_params)
 
+	# Save data as observed samples for the latter use.
+	total_obs_data.to_csv(os.path.join(proj_dir, 'data/total_obs_data.csv'), index = False)
+
 	# ============ Draw Data Figures ============
 	# It's obvious that the system has two stable steady states.
 	plt.figure('output time series', figsize = [6, 8])
@@ -147,9 +150,14 @@ if __name__ == '__main__':
 			plt.xticks(fontsize = 6)
 			plt.yticks(fontsize = 6)
 			plt.tight_layout()
+	plt.savefig(os.path.join(proj_dir, 'img/temporal_variations.png'), dpi = 450)
+	plt.close()
 
 	# ============ Draw the Phase Portraits ============
 	ca_range, T_range = VARIABLES_BOUNDS['ca'], VARIABLES_BOUNDS['T']
 	rand_init_states_n = 500
 	draw_phase_portrait(ca_range, T_range, rand_init_states_n, t, op_params)
 	plt.scatter(total_obs_data.loc[:, 'ca'], total_obs_data.loc[:, 'T'], s = 3, c = proj_cmap['blue'])
+	plt.savefig(os.path.join(proj_dir, 'img/phase_portraits.png'), dpi = 450)
+	plt.close()
+
