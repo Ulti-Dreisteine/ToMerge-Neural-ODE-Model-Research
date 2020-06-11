@@ -32,7 +32,7 @@ from lib import steps, dt, init_states_n, obs_n, ca_0, T_0, q
 from mod.chemical_reaction.reaction_model import anisothermal_reaction
 
 
-def _save_arr2dataframe(total_df: pd.DataFrame, arr: np.ndarray, label: int):
+def _convert_arr2dataframe(total_df: pd.DataFrame, arr: np.ndarray, label: int):
 	columns = ['time'] + VARIABLES
 	df = pd.DataFrame(arr, columns = columns)
 	df['label'] = df.apply(lambda x: label, axis = 1)
@@ -46,14 +46,13 @@ def _save_arr2dataframe(total_df: pd.DataFrame, arr: np.ndarray, label: int):
 	return total_df
 
 
-def generate_samples(ca_list: list, T_list: list, t: np.ndarray, op_params: list):
+def generate_samples(ca_list: list, T_list: list, t: np.ndarray, op_params: list) -> (pd.DataFrame, pd.DataFrame):
 	"""
 	Generate simulation samples set.
 	:param ca_list: list, concent A values list
 	:param T_list: list, temperature values list
 	:param t: np.ndarray, integration time array
 	:param op_params: list, operating params
-	:return:
 	"""
 	total_data = None										# total data set
 	total_obs_data = None									# observed data set
@@ -66,12 +65,13 @@ def generate_samples(ca_list: list, T_list: list, t: np.ndarray, op_params: list
 		arr = np.hstack((t.reshape(-1, 1), arr))
 
 		# Get obs data.
-		obs_locs = sorted(np.random.permutation(np.arange(steps)).tolist()[: obs_n])  # 按照先后顺序排序
+		obs_locs = sorted(np.random.permutation(np.arange(steps)).tolist()[: obs_n])        # sort
 		obs_arr = arr[obs_locs, :]
 
 		# Record data.
-		total_data = _save_arr2dataframe(total_data, arr, i)
-		total_obs_data = _save_arr2dataframe(total_obs_data, obs_arr, i)
+		total_data = _convert_arr2dataframe(total_data, arr, i)
+		total_obs_data = _convert_arr2dataframe(total_obs_data, obs_arr, i)                 # data of the sample label are from
+																							# the same init state
 
 	return total_data, total_obs_data
 
@@ -85,8 +85,6 @@ def draw_phase_portrait(ca_range: list, T_range: list, rand_init_states_n: int, 
 	:param t: np.array, time array for integretion
 	:param op_params: list like [ca_0, T_0, q], vector list of op params
 	"""
-
-	plt.figure('phase portrait', figsize = [6, 6])
 	for i in range(rand_init_states_n):
 		ca, T = np.random.uniform(ca_range[0], ca_range[1]), np.random.uniform(T_range[0], T_range[1])
 
@@ -127,8 +125,9 @@ if __name__ == '__main__':
 	total_obs_data.to_csv(os.path.join(proj_dir, 'data/total_obs_data.csv'), index = False)
 
 	# ============ Draw Data Figures ============
-	# It's obvious that the system has two stable steady states.
+	# It's obvious that the system has 2 stable steady states.
 	plt.figure('output time series', figsize = [6, 8])
+	plt.suptitle('Temporal Outputs')
 	for v in VARIABLES:
 		plt.subplot(len(VARIABLES), 1, VARIABLES.index(v) + 1)
 		for i in range(init_states_n):
@@ -150,14 +149,15 @@ if __name__ == '__main__':
 			plt.xticks(fontsize = 6)
 			plt.yticks(fontsize = 6)
 			plt.tight_layout()
+	plt.subplots_adjust(top = 0.95)
 	plt.savefig(os.path.join(proj_dir, 'img/temporal_variations.png'), dpi = 450)
-	plt.close()
+	# plt.close()
 
 	# ============ Draw the Phase Portraits ============
 	ca_range, T_range = VARIABLES_BOUNDS['ca'], VARIABLES_BOUNDS['T']
 	rand_init_states_n = 500
+	plt.figure('phase portrait', figsize = [6, 6])
 	draw_phase_portrait(ca_range, T_range, rand_init_states_n, t, op_params)
 	plt.scatter(total_obs_data.loc[:, 'ca'], total_obs_data.loc[:, 'T'], s = 3, c = proj_cmap['blue'])
 	plt.savefig(os.path.join(proj_dir, 'img/phase_portraits.png'), dpi = 450)
-	plt.close()
-
+	# plt.close()

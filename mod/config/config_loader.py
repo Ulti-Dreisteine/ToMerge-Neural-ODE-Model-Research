@@ -6,7 +6,7 @@ Created on 2019/11/22 上午9:24
 
 @Author: luolei
 
-@Describe: 项目参数配置器
+@Describe: project params config loader
 """
 
 import lake.decorator
@@ -36,33 +36,39 @@ class ConfigLoader(object):
 		return os.path.join(os.path.dirname(__file__), path)
 	
 	def _set_proj_dir(self):
-		"""项目根目录"""
+		"""
+		Set root dir path.
+		"""
 		self._proj_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 	
 	def _set_proj_cmap(self):
-		"""设置项目颜色方案"""
+		"""
+		Set color map.
+		"""
 		self._proj_cmap = {
-			'blue': '#1f77b4',  		# 蓝色
-			'orange': '#ff7f0e',  		# 黄橙色
-			'green': '#2ca02c',  		# 绿色
-			'red': '#d62728',  			# 红色
-			'purple': '#9467bd', 	 	# 紫色
-			'cyan': '#17becf', 		 	# 青色
-			'grey': '#7f7f7f', 		 	# 灰色
-			'black': 'k'  				# 黑色
+			'blue': '#1f77b4',
+			'orange': '#ff7f0e',
+			'green': '#2ca02c',
+			'red': '#d62728',
+			'purple': '#9467bd',
+			'cyan': '#17becf',
+			'grey': '#7f7f7f',
+			'black': 'k'
 		}
 	
 	def _load_config(self):
-		"""载入config.yml中的参数配置"""
+		"""Load params config from config.yml"""
 		self._config_path = os.path.join(self.proj_dir, 'config/config.yml')
 		with open(self._config_path, 'r', encoding = 'utf-8') as f:
 			self._conf = yaml.load(f, Loader = yaml.Loader)  # yaml.FullLoader
 	
 	def _load_env_config(self):
-		"""载入环境变量配置"""
+		"""
+		Load env params config.
+		"""
 		config_dir_ = os.path.join(self.proj_dir, 'config/')
 		
-		# 如果本地config中有master.yml则优先使用master, 否则使用default.yml, 否则为空字典.
+		# Primarily use params from master.yml if the file exists, else use default.yml, default empty.
 		if 'master.yml' in os.listdir(config_dir_):
 			print('Use env variables in master.yml.')
 			env_config_path_ = os.path.join(config_dir_, 'master.yml')
@@ -79,8 +85,7 @@ class ConfigLoader(object):
 			with open(env_config_path_, 'r', encoding = 'utf-8') as f:
 				self._local_env_conf = yaml.load(f, Loader = yaml.Loader)
 		
-		# 线上环境变量注入.
-		# 如果存在可注入环境变量, 则采用注入值, 否则采用环境变量配置文件中的值.
+		# Inject online params if available, else use the values from the config files.
 		self._env_conf = {}
 		if self._local_env_conf is None:
 			pass
@@ -92,7 +97,9 @@ class ConfigLoader(object):
 					self._env_conf.update({key: self._local_env_conf[key]})
 				
 	def _load_test_params_config(self):
-		"""载入测试参数配置"""
+		"""
+		Load testing params config.
+		"""
 		config_dir_ = os.path.join(self.proj_dir, 'config/')
 		test_config_path_ = os.path.join(config_dir_, 'test_params.yml')
 		with open(test_config_path_, 'r', encoding = 'utf-8') as f:
@@ -120,7 +127,7 @@ class ConfigLoader(object):
 	
 	def set_logging(self):
 		"""
-		配制logging文件
+		Set logging files
 		"""
 		if 'logs' not in os.listdir(self.proj_dir):
 			os.mkdir(os.path.join(self.proj_dir, 'logs/'))
@@ -130,8 +137,8 @@ class ConfigLoader(object):
 
 def update_filename(log_config):
 	"""
-	更新logging中filename的配置
-	:param log_config: dict, 日志配置
+	Update file name.
+	:param log_config: dict, logs config
 	"""
 	to_log_path = lambda x: os.path.abspath(os.path.join(os.path.dirname(__file__), '../', x))
 	if 'filename' in log_config:
