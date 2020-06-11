@@ -12,7 +12,11 @@ delta_H: 2.0e+5
 Tc_0: 350.0
 
 # Variables params.
-VARIABLES: ['ca', 'T']
-VARIABLES_BOUNDS:
+VARIABLES: ['ca', 'T']                                            # "time" is not included
+VARIABLES_BOUNDS:                                                 # "time" is included
   ca: [0.0, 1.0]
   T: [300, 520]
+  time: [0.0, 5.0]
+  
+# ODE Net training params.
+DISCRETE_T_STEPS: 10                                              # discretized steps number for each integration

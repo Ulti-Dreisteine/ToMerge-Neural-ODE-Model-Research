@@ -36,6 +36,10 @@ test_params = config.test_params
 VARIABLES = model_params['VARIABLES']
 VARIABLES_BOUNDS = model_params['VARIABLES_BOUNDS']
 
+DISCRETE_T_STEPS = model_params['DISCRETE_T_STEPS']
+
+VARIABLES_N = len(VARIABLES)
+
 # ============ test params ============
 dt = test_params['dt']
 steps = test_params['steps']
