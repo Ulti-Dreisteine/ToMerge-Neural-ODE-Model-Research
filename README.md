@@ -7,7 +7,7 @@ A project aiming for realizing the **ODE Network** proposed by Ricky T. Q. Chen 
 
 ODE Net can find an ode model's inner mechanism by neural network regression. 
 
-Required inputs:
+Required inputs:[]()
 
 1. Initial values $\{x_{k,t_0}\}$, here $k$ is the label of the $k$-th ode output curve cluster starting from the same initial value, $t_0$ stands for the initial time;
 2. Corresponding time records.
@@ -99,5 +99,6 @@ graph LR;
 
 ### TODOs:  
   1. ~~Build a nonlinear ODE model for generating samples;~~
-  2. Build the ODE Net for re-constructing the system's manifolds;
+  2. ~~Build the ODE Net for re-constructing the system's manifolds~~;
+    3. Apply the adjoint sensitivity method instead of back propagation to get derivatives and accelarate the computation;
 

@@ -26,7 +26,7 @@ import sys, os
 def show_all_fields(data: pd.DataFrame, legend_label: str = 'index', overlap: bool = False, fig: Figure = None,
 					return_fig: bool = False):
 	"""
-	显示数据中所有除了'time'以外其他字段值变化
+	Show all fields variations except for "time"
 	"""
 	try:
 		assert data.columns[0] == 'time'
