@@ -98,7 +98,7 @@ graph LR;
 
 
 ### TODOs:  
-  1. ~~Build a nonlinear ODE model for generating samples;~~
-  2. ~~Build the ODE Net for re-constructing the system's manifolds~~;
+  1. ~~Build a nonlinear ODE model for generating samples;~~  
+  2. ~~Build the ODE Net for re-constructing the system's manifolds;~~ 
     3. Apply the adjoint sensitivity method instead of back propagation to get derivatives and accelarate the computation;
 
