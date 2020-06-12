@@ -20,3 +20,5 @@ VARIABLES_BOUNDS:                                                 # "time" is in
   
 # ODE Net training params.
 DISCRETE_T_STEPS: 10                                              # discretized steps number for each integration
+LR: 0.001                                                         # learning rate
+EPOCHS: 2000
