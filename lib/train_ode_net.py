@@ -29,7 +29,7 @@ sys.path.append('../')
 from lib import proj_dir
 from lib import VARIABLES, VARIABLES_BOUNDS, VARIABLES_N, DISCRETE_T_STEPS
 from mod.tool.normalize_and_denoise import normalize_cols
-from mod.tool.show_figure import show_all_fields
+# from mod.tool.show_figure import show_all_fields
 
 
 def _get_integrate_t_arr(t0: np.ndarray, dt: np.ndarray) -> np.ndarray:
@@ -105,10 +105,15 @@ if __name__ == '__main__':
 	# show_all_fields(data, legend_label = 'field')
 	
 	# ============ Normalize ============
-	data = normalize_cols(data, cols_bounds = VARIABLES_BOUNDS)             # including "time"
+	data = normalize_cols(data, cols_bounds = VARIABLES_BOUNDS)             # include "time"
 	
 	# ============ Build Samples ============
 	X0_tensor, X1_tensor, dt_tensor, integ_t_tensor = build_samples(data)
+	
+	print('\nX0_tensor.shape: \t{}'.format(X0_tensor.shape))
+	print('X1_tensor.shape: \t{}'.format(X1_tensor.shape))
+	print('dt_tensor.shape: \t{}'.format(dt_tensor.shape))
+	print('integ_t_tensor.shape: \t{}'.format(integ_t_tensor.shape))
 	
 
 
