@@ -132,7 +132,7 @@ def split_train_verify_set(X0_tensor, X1_tensor, dt_tensor, integ_t_tensor):
 	
 
 if __name__ == '__main__':
-	use_cuda = torch.cuda.is_available()
+	use_cuda = False  # torch.cuda.is_available()
 	print('\nUse Cuda: {}'.format(use_cuda))
 	
 	# ============ Load Data ============
